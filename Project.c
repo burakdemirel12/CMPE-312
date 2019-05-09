@@ -155,16 +155,16 @@
 
 
 		// Smoker ID is will be passed to the threads. Allocate the ID is on the stack.
-		int smoker_ids[6];
+		int ids_smoker[6];
 
-		pthread_t smoker_threads[6];
+		pthread_t threads_smoker[6];
 
 		// Create the 6 smoker threads with IDs.
 		for (int s = 0; s < 6; ++s)
 		{
-			smoker_ids[s] = s;
+			ids_smoker[s] = s;
 
-			if (pthread_create(&smoker_threads[s], NULL, smoker, &smoker_ids[s]) == EAGAIN)
+			if (pthread_create(&threads_smoker[s], NULL, smoker, &ids_smoker[s]) == EAGAIN)
 			{
 				perror("Insufficient resources to create thread");
 				return 0;
@@ -172,15 +172,15 @@
 		}
 
 		// Pusher ID is will be passed to the threads. Allocate the ID is on the stack.
-		int pusher_ids[6];
+		int ids_pusher[6];
 
-		pthread_t pusher_threads[6];
+		pthread_t threads_pusher[6];
 
 		for (int s = 0; s < 3; ++s)
 		{
-			pusher_ids[s] = s;
+			ids_pusher[s] = s;
 
-			if (pthread_create(&pusher_threads[s], NULL, pusher, &pusher_ids[s]) == EAGAIN)
+			if (pthread_create(&threads_pusher[s], NULL, pusher, &ids_pusher[s]) == EAGAIN)
 			{
 				perror("Insufficient resources to create thread");
 				return 0;
@@ -188,15 +188,15 @@
 		}
 
 		// Agent ID is will be passed to the threads. Allocate the ID is on the stack.
-		int agent_ids[6];
+		int ids_agent[6];
 
-		pthread_t agent_threads[6];
+		pthread_t threads_agent[6];
 
 		for (int s = 0; s < 3; ++s)
 		{
-			agent_ids[s] =s;
+			ids_agent[s] =s;
 
-			if (pthread_create(&agent_threads[s], NULL, agent, &agent_ids[s]) == EAGAIN)
+			if (pthread_create(&threads_agent[s], NULL, agent, &ids_agent[s]) == EAGAIN)
 			{
 				perror("Insufficient resources to create thread");
 				return 0;
@@ -206,7 +206,7 @@
 		// Make sure all the smokers are finished smoking.
 		for (int s = 0; s < 6; ++s)
 		{
-			pthread_join(smoker_threads[s], NULL);
+			pthread_join(threads_smoker[s], NULL);
 		}
 
 		return 0;
